@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>GMod EdgeHUD Info Screen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- EDGEHUD DESIGN SYSTEM --- */
+        :root {
+            --bg-color: rgba(30, 30, 30, 0.95);
+            --outline: rgba(255, 255, 255, 0.15);
+            --corner-color: rgba(255, 255, 255, 0.6);
+            --accent-color: #48a2ff; 
+            --text-main: #ffffff;
+            --text-sub: #bbbbbb;
+        }
+
+        body {
+            margin: 0; padding: 0; font-family: 'Roboto', sans-serif;
+            /* TIPP: HIER DEIN HINTERGRUNDBILD EINFÜGEN */
+            background: #111 url('https://files.facepunch.com/garry/209c3792-508b-4977-8339-3852033068e6.jpg') no-repeat center center fixed; 
+            background-size: cover; color: var(--text-main); overflow: hidden; height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; user-select: none;
+        }
+
+        body::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 15, 15, 0.85); z-index: -1; }
+
+        /* BOX STYLING */
+        .edge-box { position: relative; background: var(--bg-color); border: 1px solid var(--outline); padding: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .edge-box::before, .edge-box::after, .edge-box .corners-bot::before, .edge-box .corners-bot::after {
+            content: ''; position: absolute; width: 10px; height: 10px; border-color: var(--corner-color); border-style: solid; pointer-events: none;
+        }
+        .edge-box::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+        .edge-box::after { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+        .corners-bot { position: absolute; top:0; left:0; width:100%; height:100%; pointer-events: none; }
+        .corners-bot::before { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+        .corners-bot::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+
+        /* HEADER */
+        header { padding: 0 50px 30px 50px; display: flex; justify-content: flex-start; align-items: center; width: calc(100% - 100px); position: absolute; top: 40px; }
+        
+        .server-title h1 { font-weight: 900; font-size: 38px; margin: 0; text-transform: uppercase; letter-spacing: 2px; color: #ffffff; }
+        .server-subtitle { font-weight: 400; color: var(--text-sub); margin-top: 5px; font-size: 18px; }
+
+        /* LAYOUT */
+        main { display: grid; grid-template-columns: 320px 1fr 320px; gap: 25px; padding: 0 50px; height: 55vh; width: calc(100% - 100px); margin-top: 60px; }
+        .column { display: flex; flex-direction: column; gap: 20px; height: 100%; }
+
+        h2 { font-size: 16px; font-weight: 700; text-transform: uppercase; color: var(--accent-color); margin: 0 0 12px 0; border-bottom: 1px solid var(--outline); padding-bottom: 8px; }
+        p, li { font-size: 14px; line-height: 1.6; color: #ddd; }
+        ul { list-style: none; padding: 0; margin: 0; }
+        li { margin-bottom: 8px; display: flex; align-items: center; }
+        li::before { content: '›'; color: var(--accent-color); font-weight: bold; margin-right: 10px; font-size: 18px; }
+
+        /* STAFF LIST */
+        .staff-member { display: flex; align-items: center; margin-bottom: 10px; background: rgba(255,255,255,0.03); padding: 8px; border-left: 2px solid transparent; transition: 0.2s; }
+        .staff-member:hover { border-left-color: var(--accent-color); background: rgba(255,255,255,0.06); }
+        .staff-avatar-img { width: 36px; height: 36px; margin-right: 12px; background: #333; }
+        .staff-details { display: flex; flex-direction: column; }
+        .staff-name { font-weight: 700; font-size: 14px; }
+        .staff-rank { font-size: 12px; color: var(--accent-color); }
+
+        /* INFO BOXES */
+        .info-box { background: rgba(255,255,255,0.05); padding: 8px 15px; border-left: 3px solid var(--accent-color); font-size: 14px; margin-bottom: 8px; }
+        .info-label { font-weight: 700; color: #fff; margin-right: 5px; text-transform: uppercase; font-size: 11px; opacity: 0.8; }
+        .info-value { font-weight: 500; color: #fff; float: right; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="server-title">
+            <h1>[GER] SCP:RP by Atria | Test-Server</h1> 
+            <div class="server-subtitle">Willkommen bei Atria!</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="column">
+            <div class="edge-box">
+                <div class="corners-bot"></div>
+                <h2>Server Features</h2>
+                <ul>
+                    <li>Serious-Roleplay</li>
+                    <li>Über 30 Spielbare Berufe</li>
+                    <li>Spielbare SCPs</li>
+                    <li>Aktive & Kompetentes Team</li>
+                    <li>Exklusive Addons & Custom Scripts</li>
+                    <li>Eigene Map</li>
+                    <li>Kein Pay to Win</li>
+                </ul>
+            </div>
+            
+            <div class="edge-box" style="margin-top: auto;">
+                <div class="corners-bot"></div>
+                <h2>Server Status</h2>
+                <div class="info-box">
+                    <span class="info-label">Map</span> 
+                    <span class="info-value">rp_atria_site27_v1</span>
+                </div>
+                <div class="info-box">
+                    <span class="info-label">Gamemode</span> 
+                    <span class="info-value">SCP:RP</span>
+                </div>
+                <div class="info-box">
+                    <span class="info-label">Slots</span> 
+                    <span class="info-value">10 Slots</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="edge-box">
+                <div class="corners-bot"></div>
+                <h2>Regelwerk</h2>
+                <p>Unwissenheit schützt vor Strafe nicht. Bitte mach dich mit unseren Regeln vertraut (F1 im Spiel).</p>
+                <p>Nutze das Ticketsystem (F6 im Spiel) bei Fragen oder Regelverstößen.</p>
+            </div>
+
+            <div class="edge-box" style="flex-grow: 1;">
+                <div class="corners-bot"></div>
+                <h2>Beschreibung</h2>
+                <p>Willkommen auf unserem Server! Wir wünschen dir einen guten Start und hoffen du findest dich gut ein. Sollten fragen bestehen melde dich gerne bei dem Team mit F6 oder im Discord. </p>
+                <br>
+                <h2>Links</h2>
+                <ul>
+                    <li>Discord: discord.gg/s7Y8zhqBFX</li>
+                    <li>Steam Gruppe: steamcommunity.com/groups/atria-scprp</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="edge-box" style="height: 100%;">
+                <div class="corners-bot"></div>
+                <h2>Leitungsebene</h2>
+                
+                <div class="staff-member">
+                    <img src="https://i.imgur.com/9WhWWIQ.png" class="staff-avatar-img">
+                    <div class="staff-details">
+                        <span class="staff-name">Ayqz</span>
+                        <span class="staff-rank">Owner</span>
+                    </div>
+                </div>
+
+                <div class="staff-member">
+                    <img src="https://i.imgur.com/od7QmhC.png" class="staff-avatar-img">
+                    <div class="staff-details">
+                        <span class="staff-name">Nagasaki</span>
+                        <span class="staff-rank">Community Manager</span>
+                    </div>
+                </div>
+
+                <div class="staff-member">
+                    <img src="https://i.imgur.com/FGM1HHN.png" class="staff-avatar-img">
+                    <div class="staff-details">
+                        <span class="staff-name">Cygnar</span>
+                        <span class="staff-rank">Infrastruktur Admin</span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function GameDetails() {}
+        function SetStatus() {}
+        function DownloadingFile() {}
+        function SetFilesTotal() {}
+        function SetFilesNeeded() {}
+    </script>
+</body>
+</html>
